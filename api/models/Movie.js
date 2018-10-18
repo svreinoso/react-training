@@ -3,7 +3,11 @@ var uniqueValidator = require('mongoose-unique-validator');
 var User = mongoose.model('User');
 
 var MovieSchema = new mongoose.Schema({
-   title: String,
+   title: {
+       type: String,
+       unique: true,
+       required: true
+   },
    year: Number,
    rating: Number,
    covertImage: String,

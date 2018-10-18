@@ -14,6 +14,13 @@ router.get('/', auth.optional, function(req, res, next){
     }).catch(next)
 });
 
+router.get('/:id', auth.optional, function (req, res, next) {
+    Movie.findById(req.params.id, function (err, movvie) {
+        if (err) return next(err);
+        res.send(movvie.toJsonFor());
+    })
+});
+
 router.post('/', auth.required, function (req, res, next) {
     User.findById(req.payload.id).then(function (user) {
         if (!user) {
