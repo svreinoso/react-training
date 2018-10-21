@@ -5,19 +5,61 @@ var User = mongoose.model('User');
 var auth = require('../auth');
 
 router.get('/', auth.optional, function(req, res, next){
-    Movie.find().then(function (result) {
+    var query = {};
+    var pageZise = 20;
+    var limit = 20;
+    var offset = 0;
+    var page = 1;
+
+    if(typeof req.query.page !== 'undefined'){
+        offset = req.query.page * pageZise;
+    }
+
+    if(typeof req.query.limit !== 'undefined'){
+        limit = req.query.limit;
+    }
+
+    if(typeof req.query.offset !== 'undefined'){
+        offset = req.query.offset;
+    }
+
+    if (req.query.actor){
+        query.actors = {"$regex": req.query.actor}
+    }
+
+    if (req.query.title){
+        query.title = {"$regex": req.query.title}
+    }
+
+    if (req.query.year){
+        query.year = req.query.year
+    }
+
+    return Promise.all([
+        Movie.find(query)
+            .limit(Number(limit))
+            .skip(Number(offset))
+            .exec(),
+        Movie.count(query).exec()
+    ]).then(function(result){
+        var movies = result[0];
+        var moviesCount = result[1];
+        var pages = moviesCount / pageZise;
         return res.json({
-            movies: result.map(function (movie) {
-                return movie.toJsonFor()
-            })
-        })
-    }).catch(next)
+            movies: movies.map(function(movie){
+                return movie.toJsonFor();
+            }),
+            moviesCount: moviesCount,
+            pages: Math.ceil(pages)
+        });
+    }).catch(next);
 });
 
 router.get('/:id', auth.optional, function (req, res, next) {
-    Movie.findById(req.params.id, function (err, movvie) {
+    Movie.findById(req.params.id, function (err, movie) {
+        console.log(err, movie);
         if (err) return next(err);
-        res.send(movvie.toJsonFor());
+        res.send(movie.toJsonFor());
     })
 });
 
