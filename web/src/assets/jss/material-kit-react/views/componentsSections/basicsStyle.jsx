@@ -2,6 +2,9 @@ import { container, title } from "assets/jss/material-kit-react.jsx";
 import customCheckboxRadioSwitch from "assets/jss/material-kit-react/customCheckboxRadioSwitch.jsx";
 
 const basicsStyle = {
+  width100: {
+    width: "100%"
+  },
   sections: {
     padding: "70px 0"
   },

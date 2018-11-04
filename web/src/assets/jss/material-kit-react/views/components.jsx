@@ -2,6 +2,9 @@ import { container } from "assets/jss/material-kit-react.jsx";
 
 const componentsStyle = {
   container,
+  width100: {
+    width: "100%"
+  },
   brand: {
     color: "#FFFFFF",
     textAlign: "left"

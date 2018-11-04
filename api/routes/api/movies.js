@@ -9,10 +9,11 @@ router.get('/', auth.optional, function(req, res, next){
     var pageZise = 20;
     var limit = 20;
     var offset = 0;
-    var page = 1;
 
     if(typeof req.query.page !== 'undefined'){
-        offset = req.query.page * pageZise;
+        if(req.query.page > 1 ){
+            offset = req.query.page * pageZise;
+        }
     }
 
     if(typeof req.query.limit !== 'undefined'){
@@ -35,6 +36,8 @@ router.get('/', auth.optional, function(req, res, next){
         query.year = req.query.year
     }
 
+    console.log(offset);
+
     return Promise.all([
         Movie.find(query)
             .limit(Number(limit))
@@ -42,6 +45,7 @@ router.get('/', auth.optional, function(req, res, next){
             .exec(),
         Movie.count(query).exec()
     ]).then(function(result){
+        console.log(result);
         var movies = result[0];
         var moviesCount = result[1];
         var pages = moviesCount / pageZise;

@@ -12,11 +12,29 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import SectionHome from "./Sections/SectionHome.jsx";
 
 import componentsStyle from "assets/jss/material-kit-react/views/components.jsx";
+import { httpGet } from "services/httpServices";
+import ReactPlayer from "react-player";
 
-class Components extends React.Component {
+class MovieDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      movie: {
+        content: [{}]
+      }
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+    const movieId = this.props.match.params["movieId"];
+    httpGet("movies/" + movieId, response => {
+      this.setState({ movie: response });
+    });
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -48,7 +66,38 @@ class Components extends React.Component {
         </Parallax>
 
         <div className={classNames(classes.main, classes.mainRaised)}>
-          <SectionHome search={this.props} />
+          <div className={classes.sections}>
+            <div className={classes.container}>
+              <div className={classes.title}>
+                <h2>{this.state.movie.title}</h2>
+                <GridContainer>
+                  <div>
+                    <ReactPlayer
+                      url={this.state.movie.content[0].link}
+                      controls
+                      playing
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+                  <br/>
+                  <div>
+                    <img
+                      src={this.state.movie.fullImage}
+                      alt="..."
+                      className={
+                        classes.imgRoundedCircle +
+                        " " +
+                        classes.imgFluid +
+                        " " +
+                        classes.width100
+                      }
+                    />
+                  </div>
+                </GridContainer>
+              </div>
+            </div>
+          </div>
         </div>
         <Footer />
       </div>
@@ -56,4 +105,4 @@ class Components extends React.Component {
   }
 }
 
-export default withStyles(componentsStyle)(Components);
+export default withStyles(componentsStyle)(MovieDetails);

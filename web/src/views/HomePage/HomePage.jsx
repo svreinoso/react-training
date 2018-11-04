@@ -8,10 +8,7 @@ import Footer from "components/Footer/Footer.jsx";
 
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
-import Parallax from "components/Parallax/Parallax.jsx";
 import image from "assets/img/bg7.jpg";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 
 class HomePage extends React.Component {
   constructor(props) {

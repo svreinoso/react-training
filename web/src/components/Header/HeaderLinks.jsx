@@ -21,11 +21,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Route, Redirect } from 'react-router'
 
 
 function HeaderLinks({ ...props }) {
   const { classes } = props;
-
+  
   let user = JSON.parse(localStorage.getItem("authUser"));
   console.log(user);
   if(user){
@@ -110,6 +111,14 @@ function HeaderLinks({ ...props }) {
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
+            }}
+            onKeyUp={event => {
+              console.log(event.target);
+              if(event.keyCode === 13 && event.target.value) {
+                // history.push(`/movies/?title=${event.target.value}`);
+                // <Redirect to={`/movies/?title=${event.target.value}`} />
+                location.href = `/movies/${event.target.value}`;
+              }
             }}
           />
         </div>

@@ -13,6 +13,7 @@ var MovieSchema = new mongoose.Schema({
    covertImage: String,
    fullImage: String,
    actors: String,
+   content: [],
    createdBy: {
        type: mongoose.Schema.Types.ObjectId,
        ref: 'User'
@@ -31,7 +32,8 @@ MovieSchema.methods.toJsonFor = function () {
         rating: this.rating,
         covertImage: this.covertImage,
         fullImage: this.fullImage,
-        actors: this.actors
+        actors: this.actors,
+        content: this.content
     }
 }
 

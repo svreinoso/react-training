@@ -84,7 +84,15 @@ class Header extends React.Component {
                 {leftLinks}
               </Hidden>
             ) : (
-              brandComponent
+              // brandComponent
+              <Button
+                className={classes.title}
+                onClick={() => {
+                  document.location.href = "/";
+                }}
+              >
+                {brand}
+              </Button>
             )}
           </div>
           <Hidden smDown implementation="css">

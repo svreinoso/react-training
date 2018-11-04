@@ -60,7 +60,7 @@ class LoginPage extends React.Component {
     };
     httpPost("users/login", data, response => {
       localStorage.setItem("authUser", response);
-      console.log(response);
+      // console.log(response);
     });
     event.preventDefault();
   }
