@@ -21,9 +21,9 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/bg7.jpg";
-import { httpPost } from "../../services/httpServices";
+import axios from "axios";
 
-class LoginPage extends React.Component {
+class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
@@ -52,16 +52,15 @@ class LoginPage extends React.Component {
   }
 
   login(event) {
-    const data = {
-      user: {
-        email: "samuel.r.l@hotmail.com",
-        password: "123456"
-      }
-    };
-    httpPost("users/login", data, response => {
-      localStorage.setItem("authUser", response);
-      console.log(response);
-    });
+    axios
+      .get("http://localhost:3001/api/movies/")
+      .then(response => {
+        console.log(response);
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
+    console.log(this.state.loginModel);
     event.preventDefault();
   }
 
@@ -181,4 +180,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default withStyles(loginPageStyle)(LoginPage);
+export default withStyles(loginPageStyle)(RegisterPage);
