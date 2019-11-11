@@ -25,7 +25,6 @@ class SectionHome extends React.Component {
   }
 
   loadMovies() {
-    console.log(this.state);
     let url = "movies/?page=" + this.state.currentPage;
     if (this.state.title != "") {
       url += `&title=${this.state.title}`;
@@ -44,14 +43,12 @@ class SectionHome extends React.Component {
       this.props.search.match.params &&
       this.props.search.match.params.title
     ) {
-      console.log(this.props.search.match.params.title);
       this.setState({ title: this.props.search.match.params.title }, () => {
         this.loadMovies();
       });
     } else {
       this.loadMovies();
     }
-    console.log(this.props);
     // const movieId = this.props.match.params["movieId"];
   }
 

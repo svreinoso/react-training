@@ -28,7 +28,6 @@ function HeaderLinks({ ...props }) {
   const { classes } = props;
   
   let user = JSON.parse(localStorage.getItem("authUser"));
-  console.log(user);
   if(user){
 
     return (
